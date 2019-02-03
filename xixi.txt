@@ -1,0 +1,59 @@
+
+julia> Fs = Vector{Any}(undef, 2); i = 1;
+
+julia> while i <= 2
+           Fs[i] = ()->i
+           global i += 1
+       end
+
+julia> Fs[1]()
+3
+
+julia> Fs[2]()
+3
+
+
+
+ Fs = Vector{Any}(undef, 2); i = 1;
+
+julia> while i <= 2
+           let i = i
+               Fs[i] = ()->i
+           end
+           global i += 1
+       end
+
+julia> Fs[1]()
+1
+
+julia> Fs[2]()
+2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+最小二乘法笔记：(记得在样本属性加多一列1)
+公式推导：
+令：AX = Y = B
+X为要求的系数  A为给定样本  B为目标值则在X不确定的情况下，Y可以看成一个平面，是由样本向量构为基构成的
+A的每一个属性为一个长的多维向量
+若要AX最接近B，只需要点B距离Y平面的距离最小，即B与平面Y的一个连线正交
+解法：
+令C = B-AX  （C实际上就是那条连线）
+C垂直样本向量为基向量构成的平面Y
+必有：C*每一个属性向量 = 0
+这样等价于：A'(B-AX) = 0 或者 A'AX = A'B 或者 令D = A'A ,X = D^-1 * A'B 
+
+
